@@ -1,0 +1,32 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: "AutenticacionService"
+  devtools:
+    add-properties: false
+  sql:
+    init:
+      mode: always
+  profiles:
+    include: null
+adapters:
+  driven:
+    r2dbc:
+      host: localhost
+      port: 5432
+      database: crediya_auth_db
+      username: rponce
+      password:
+      schema: public
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"
