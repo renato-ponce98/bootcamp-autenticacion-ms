@@ -1,9 +1,15 @@
 package com.crediya.autenticacion.api;
 
+import com.crediya.autenticacion.dto.ErrorResponse;
 import com.crediya.autenticacion.dto.UserSignUpRequest;
 import com.crediya.autenticacion.dto.UserSignUpResponse;
 import com.crediya.autenticacion.mapper.UserRestMapper;
 import com.crediya.autenticacion.usecase.usersignup.UserSignUpUseCase;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +23,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping(value = "/api/v1", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@Tag(name = "User Management", description = "Endpoints para la gestión de usuarios")
 public class UserSignUpController {
 
     private final UserSignUpUseCase userSignUpUseCase;
@@ -25,7 +32,32 @@ public class UserSignUpController {
 
     @PostMapping(path = "/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<UserSignUpResponse> signUp(@Valid @RequestBody UserSignUpRequest request) {
+    @Operation(
+            summary = "Registrar un nuevo usuario",
+            description = "Crea un nuevo usuario en el sistema con sus datos personales básicos.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "201",
+                            description = "Usuario registrado exitosamente",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserSignUpResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Datos de entrada inválidos",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "409",
+                            description = "El correo electrónico ya se encuentra registrado",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+                    )
+            }
+    )
+
+    public Mono<UserSignUpResponse> signUp(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Datos del usuario a registrar", required = true, content = @Content(schema = @Schema(implementation = UserSignUpRequest.class)))
+            @Valid @RequestBody UserSignUpRequest request) {
+
         log.info("Iniciando proceso de registro para el correo: {}", request.getEmail());
 
         Mono<UserSignUpResponse> businessFlow = Mono.just(request)
