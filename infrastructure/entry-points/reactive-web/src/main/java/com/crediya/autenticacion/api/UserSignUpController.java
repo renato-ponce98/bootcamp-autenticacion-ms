@@ -4,6 +4,7 @@ import com.crediya.autenticacion.dto.ErrorResponse;
 import com.crediya.autenticacion.dto.UserSignUpRequest;
 import com.crediya.autenticacion.dto.UserSignUpResponse;
 import com.crediya.autenticacion.mapper.UserRestMapper;
+import com.crediya.autenticacion.usecase.finduserbyidentitydocument.FindUserByIdentityDocumentUseCase;
 import com.crediya.autenticacion.usecase.usersignup.UserSignUpUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.reactive.TransactionalOperator;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -27,10 +29,11 @@ import reactor.core.publisher.Mono;
 public class UserSignUpController {
 
     private final UserSignUpUseCase userSignUpUseCase;
+    private final FindUserByIdentityDocumentUseCase findUserUseCase;
     private final UserRestMapper userRestMapper;
     private final TransactionalOperator transactionalOperator;
 
-    @PostMapping(path = "/users")
+    @PostMapping(path = "/usuarios")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
             summary = "Registrar un nuevo usuario",
@@ -68,5 +71,13 @@ public class UserSignUpController {
         return businessFlow.as(transactionalOperator::transactional)
                 .doOnSuccess(response -> log.info("Usuario registrado exitosamente con ID: {}", response.getId()))
                 .doOnError(error -> log.error("Error durante el registro para el correo {}: {}", request.getEmail(), error.getMessage()));
+    }
+
+    @GetMapping("/usuarios/documento/{identityDocument}")
+    @Operation(summary = "Verificar si un usuario existe por documento de identidad")
+    public Mono<ResponseEntity<Boolean>> userExists(@PathVariable("identityDocument") String identityDocument) {
+        log.info("Verificando existencia del documento: {}", identityDocument);
+        return findUserUseCase.userExists(identityDocument)
+                .map(exists -> ResponseEntity.ok(exists));
     }
 }

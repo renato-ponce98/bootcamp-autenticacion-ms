@@ -25,6 +25,9 @@ public class UserEntity {
     @Column("birth_date")
     private LocalDate birthDate;
 
+    @Column("identity_document")
+    private String identityDocument;
+
     private String address;
     private String phone;
     private String email;

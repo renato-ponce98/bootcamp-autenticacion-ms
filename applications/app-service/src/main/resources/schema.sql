@@ -4,6 +4,7 @@
         id BIGSERIAL PRIMARY KEY,
         first_name VARCHAR(255) NOT NULL,
         last_name VARCHAR(255) NOT NULL,
+        identity_document VARCHAR(50) UNIQUE NOT NULL,
         birth_date DATE,
         address VARCHAR(255),
         phone VARCHAR(50),

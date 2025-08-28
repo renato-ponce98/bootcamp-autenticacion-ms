@@ -15,6 +15,9 @@ public class UserSignUpRequest {
     @NotBlank(message = "El apellido no puede estar vacío.")
     private String lastName;
 
+    @NotBlank(message = "El documento de identidad no puede estar vacío.")
+    private String identityDocument;
+
     private LocalDate birthDate;
 
     private String address;

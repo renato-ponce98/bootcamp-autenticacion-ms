@@ -1,6 +1,7 @@
 package com.crediya.autenticacion.api;
 
 import com.crediya.autenticacion.dto.ErrorResponse;
+import com.crediya.autenticacion.usecase.exceptions.DomainValidationException;
 import com.crediya.autenticacion.usecase.exceptions.EmailAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,18 @@ public class GlobalExceptionHandler {
                 .message("Error de validación. Por favor, revise los datos enviados.")
                 .path(exchange.getRequest().getPath().value())
                 .details(details)
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DomainValidationException.class)
+    public ResponseEntity<ErrorResponse> handleDomainValidation(DomainValidationException ex, ServerWebExchange exchange) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error("Bad Request")
+                .message(ex.getMessage())
+                .path(exchange.getRequest().getPath().value())
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }

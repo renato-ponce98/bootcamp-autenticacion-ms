@@ -2,6 +2,7 @@ package com.crediya.autenticacion.usecase.usersignup;
 
 import com.crediya.autenticacion.model.user.User;
 import com.crediya.autenticacion.model.user.gateways.UserRepository;
+import com.crediya.autenticacion.usecase.exceptions.DomainValidationException;
 import com.crediya.autenticacion.usecase.exceptions.EmailAlreadyExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,6 +35,7 @@ class UserSignUpUseCaseTest {
         testUser = User.builder()
                 .firstName("John")
                 .lastName("Doe")
+                .identityDocument("12345678")
                 .email("john.doe@example.com")
                 .baseSalary(new BigDecimal("60000"))
                 .build();
@@ -66,6 +68,24 @@ class UserSignUpUseCaseTest {
 
         StepVerifier.create(result)
                 .expectError(EmailAlreadyExistsException.class)
+                .verify();
+    }
+
+    @Test
+    @DisplayName("Should throw DomainValidationException for invalid user data")
+    void shouldThrowDomainValidationExceptionForInvalidUserData() {
+        User invalidUser = User.builder()
+                .firstName("")
+                .lastName("Doe")
+                .identityDocument("12345678")
+                .email("test@example.com")
+                .baseSalary(new BigDecimal("1000"))
+                .build();
+
+        Mono<User> result = userSignUpUseCase.processUserSignUp(invalidUser);
+
+        StepVerifier.create(result)
+                .expectError(DomainValidationException.class)
                 .verify();
     }
 }

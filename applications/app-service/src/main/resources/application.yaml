@@ -10,6 +10,8 @@ spring:
       mode: always
   profiles:
     include: null
+springdoc:
+  paths-to-match: /api/**
 adapters:
   driven:
     r2dbc:

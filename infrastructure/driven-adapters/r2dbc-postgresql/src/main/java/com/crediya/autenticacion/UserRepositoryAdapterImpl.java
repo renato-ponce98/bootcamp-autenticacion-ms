@@ -27,4 +27,9 @@ public class UserRepositoryAdapterImpl implements UserRepository {
     public Mono<Boolean> existsByEmail(String email) {
         return repository.existsByEmail(email);
     }
+
+    @Override
+    public Mono<Boolean> existsByIdentityDocument(String identityDocument) {
+        return repository.existsByIdentityDocument(identityDocument);
+    }
 }

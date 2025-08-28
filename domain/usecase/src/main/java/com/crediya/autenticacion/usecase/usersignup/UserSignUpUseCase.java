@@ -12,6 +12,13 @@ public class UserSignUpUseCase {
     private final UserRepository userRepository;
 
     public Mono<User> processUserSignUp(User user) {
+
+        try {
+            UserValidator.validateForCreation(user);
+        } catch (Exception e) {
+            return Mono.error(e);
+        }
+
         return userRepository.existsByEmail(user.getEmail())
                 .flatMap(exists -> {
                     if (Boolean.TRUE.equals(exists)) {
