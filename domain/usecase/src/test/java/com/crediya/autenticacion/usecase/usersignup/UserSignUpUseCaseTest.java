@@ -42,7 +42,7 @@ class UserSignUpUseCaseTest {
     }
 
     @Test
-    @DisplayName("Debería registrar un usuario exitosamente cuando el correo no existe")
+    @DisplayName("Should register user when email does not exist.")
     void shouldRegisterUserSuccessfullyWhenEmailDoesNotExist() {
         when(userRepository.existsByEmail(any(String.class))).thenReturn(Mono.just(false));
 
@@ -58,7 +58,7 @@ class UserSignUpUseCaseTest {
     }
 
     @Test
-    @DisplayName("Debería lanzar EmailAlreadyExistsException cuando el correo ya existe")
+    @DisplayName("Should throw EmailAlreadyExistsException when email already exists.")
     void shouldThrowExceptionWhenEmailAlreadyExists() {
         when(userRepository.existsByEmail(any(String.class))).thenReturn(Mono.just(true));
 
