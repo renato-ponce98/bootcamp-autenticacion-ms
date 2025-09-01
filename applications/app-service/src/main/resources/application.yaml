@@ -32,3 +32,6 @@ management:
         enabled: true
 cors:
   allowed-origins: "http://localhost:4200,http://localhost:8080"
+jwt:
+  secret: "EsteEsUnSecretoSuperLargoYComplejoParaCrediYaQueDebeSerCambiadoEnProduccion12345"
+  expiration-ms: 3600000

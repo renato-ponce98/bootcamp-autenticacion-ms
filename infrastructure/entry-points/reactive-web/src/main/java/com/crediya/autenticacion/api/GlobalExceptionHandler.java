@@ -3,6 +3,7 @@ package com.crediya.autenticacion.api;
 import com.crediya.autenticacion.dto.ErrorResponse;
 import com.crediya.autenticacion.usecase.exceptions.DomainValidationException;
 import com.crediya.autenticacion.usecase.exceptions.EmailAlreadyExistsException;
+import com.crediya.autenticacion.usecase.exceptions.InvalidCredentialsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -56,5 +57,17 @@ public class GlobalExceptionHandler {
                 .path(exchange.getRequest().getPath().value())
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handleBadCredentials(InvalidCredentialsException ex, ServerWebExchange exchange) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .error("Unauthorized")
+                .message(ex.getMessage())
+                .path(exchange.getRequest().getPath().value())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 }

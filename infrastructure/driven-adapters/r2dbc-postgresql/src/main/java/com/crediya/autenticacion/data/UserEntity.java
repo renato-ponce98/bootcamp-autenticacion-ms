@@ -34,4 +34,9 @@ public class UserEntity {
 
     @Column("base_salary")
     private BigDecimal baseSalary;
+
+    private String password;
+
+    @Column("role_id")
+    private Long roleId;
 }

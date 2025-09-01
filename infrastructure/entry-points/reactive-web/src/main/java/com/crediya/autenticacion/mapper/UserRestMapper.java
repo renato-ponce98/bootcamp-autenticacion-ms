@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UserRestMapper {
-    @Mapping(target = "id", ignore = true)
+    @Mapping(source = "roleId", target = "roleId")
     User toDomain(UserSignUpRequest request);
 
     @Mapping(target = "message", constant = "Usuario registrado exitosamente.")

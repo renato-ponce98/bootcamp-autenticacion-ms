@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.reactive.TransactionalOperator;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -35,6 +36,7 @@ public class UserSignUpController {
 
     @PostMapping(path = "/usuarios")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyRole('ADMIN', 'ASESOR')")
     @Operation(
             summary = "Registrar un nuevo usuario",
             description = "Crea un nuevo usuario en el sistema con sus datos personales básicos.",
