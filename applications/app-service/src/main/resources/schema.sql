@@ -26,4 +26,6 @@
     INSERT INTO users (first_name, last_name, email, identity_document, phone, role_id, base_salary, password)
     VALUES ('Admin', 'CrediYa', 'admin@crediya.com', '11111111', '999888777', 1, 10000.00, '$2a$12$4CSqziAIHnhB4eCWHyI/AuZkdn5gDRr0/.y0Rew8cZ7w/UrFfg.eO');
     INSERT INTO users (first_name, last_name, email, identity_document, phone, role_id, base_salary, password)
-    VALUES ('Carla', 'Soto', 'cliente@crediya.com', '22222222', '911222333', 3, 50000.00, '$2a$12$4CSqziAIHnhB4eCWHyI/AuZkdn5gDRr0/.y0Rew8cZ7w/UrFfg.eO');
+    VALUES ('Asesor', 'CrediYa', 'asesor@crediya.com', '22222222', '777666555', 2, 10000.00, '$2a$12$4CSqziAIHnhB4eCWHyI/AuZkdn5gDRr0/.y0Rew8cZ7w/UrFfg.eO');
+    INSERT INTO users (first_name, last_name, email, identity_document, phone, role_id, base_salary, password)
+    VALUES ('Carla', 'Soto', 'cliente@crediya.com', '333333333', '911222333', 3, 50000.00, '$2a$12$4CSqziAIHnhB4eCWHyI/AuZkdn5gDRr0/.y0Rew8cZ7w/UrFfg.eO');

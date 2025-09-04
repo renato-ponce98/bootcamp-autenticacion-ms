@@ -7,4 +7,5 @@ public interface UserR2dbcRepository extends ReactiveCrudRepository<UserEntity, 
     Mono<Boolean> existsByEmail(String email);
     Mono<Boolean> existsByIdentityDocument(String identityDocument);
     Mono<UserEntity> findByEmail(String email);
+    Mono<UserEntity> findByIdentityDocument(String identityDocument);
 }

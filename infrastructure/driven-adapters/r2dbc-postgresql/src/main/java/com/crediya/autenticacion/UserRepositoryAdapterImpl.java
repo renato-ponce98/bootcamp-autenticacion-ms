@@ -37,4 +37,10 @@ public class UserRepositoryAdapterImpl implements UserRepository {
     public Mono<User> findByEmail(String email) {
         return repository.findByEmail(email).map(mapper::toDomain);
     }
+
+    @Override
+    public Mono<User> findByIdentityDocument(String identityDocument) {
+        return repository.findByIdentityDocument(identityDocument)
+                .map(mapper::toDomain);
+    }
 }

@@ -1,5 +1,6 @@
 package com.crediya.autenticacion.mapper;
 
+import com.crediya.autenticacion.dto.UserDetailResponse;
 import com.crediya.autenticacion.dto.UserSignUpRequest;
 import com.crediya.autenticacion.dto.UserSignUpResponse;
 import com.crediya.autenticacion.model.user.User;
@@ -13,4 +14,6 @@ public interface UserRestMapper {
 
     @Mapping(target = "message", constant = "Usuario registrado exitosamente.")
     UserSignUpResponse toResponse(User user);
+
+    UserDetailResponse toDetailResponse(User user);
 }
