@@ -15,11 +15,11 @@ springdoc:
 adapters:
   driven:
     r2dbc:
-      host: localhost
+      host: db-auth
       port: 5432
       database: crediya_auth_db
-      username: rponce
-      password:
+      username: admin
+      password: admin
       schema: public
 management:
   endpoints:
