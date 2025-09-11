@@ -18,8 +18,8 @@ adapters:
       host: db-auth
       port: 5432
       database: crediya_auth_db
-      username: admin
-      password: admin
+      username: ${DB_USER}
+      password: ${DB_PASSWORD}
       schema: public
 management:
   endpoints:
@@ -31,7 +31,7 @@ management:
       probes:
         enabled: true
 cors:
-  allowed-origins: "http://localhost:4200,http://localhost:8080"
+  allowed-origins: "http://localhost:4200,http://autenticacion-ms:8080"
 jwt:
   secret: "EsteEsUnSecretoSuperLargoYComplejoParaCrediYaQueDebeSerCambiadoEnProduccion12345"
   expiration-ms: 3600000
